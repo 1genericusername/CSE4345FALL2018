@@ -13,27 +13,27 @@ void runSort()
     one.execute();
     one.display();
     one.stats();
-    one.save();
+    one.save("Set1_Stats.txt");
 
     sort two;
     two.load("set2.csv");
     two.execute();
     two.display();
     two.stats();
-    two.save();
+    two.save("Set2_Stats.txt");
 
     sort three;
     three.load("set3.csv");
     three.execute();
     three.display();
     three.stats();
-    three.save();
+    three.save("Set3_Stats.txt");
 
     sort four;
     four.load("set4.csv");
     four.execute();
     four.display();
     four.stats();
-    four.save();
+    four.save("Set4_Stats.txt");
 
 }

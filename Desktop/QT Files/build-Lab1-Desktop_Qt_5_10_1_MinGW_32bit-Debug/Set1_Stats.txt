@@ -1,0 +1,6 @@
+0,1,2,4,4,4,4,7,8,8,9,
+===========================================================================
+
+To sort this data set of size 11 using the bubblesort method took 0 ms.
+To sort this data set of size 11 using the mergesort method took 0 ms.
+To sort this data set of size 11 using the insert sort method took 0 ms.

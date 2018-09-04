@@ -16,7 +16,7 @@ void createSet()
     writefile.open(name);
     for(int i=0;i<size;i++)
     {
-        entry = rand()%(size+1);
+        entry = rand()%(size);
         writefile << entry;
         writefile << "\n";
     }

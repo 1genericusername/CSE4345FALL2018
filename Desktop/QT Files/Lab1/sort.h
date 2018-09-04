@@ -11,6 +11,7 @@ class sort : public algorithm
 {
     private:
         vector<int> dataset;
+        string file;
         string time1;
         string time2;
         string time3;
@@ -21,6 +22,7 @@ class sort : public algorithm
             ifstream inFile;
             ofstream writefile;
             inFile.open(filename);
+            file = filename;
             int entry;
                 while(!inFile.eof())
                 {
@@ -91,10 +93,10 @@ class sort : public algorithm
             cout << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
         }
 
-        void save()
+        void save(string filename)
         {
             ofstream writefile;
-            writefile.open("Set1-Solution.txt");
+            writefile.open(filename);
             for(int i=0;i<dataset.size();i++)
             {
                 writefile << dataset[i];
