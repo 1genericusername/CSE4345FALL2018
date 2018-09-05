@@ -6,34 +6,115 @@
 #include "merge.h"
 using namespace std;
 
-void runSort()
+void SortRandom()
 {
-    sort one;
-    one.load("set1.csv");
-    one.execute();
-    one.display();
-    one.stats();
-    one.save("Set1_Stats.txt");
+    sort random;
+    //Sorts 10 set
+    random.load("Random(10).txt");
+    random.execute();
+    random.stats();
+    random.save("Random(10)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 1000 set
+    random.load("Random(1000).txt");
+    random.execute();
+    random.stats();
+    random.save("Random(1000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 10,000 set
+    random.load("Random(10000).txt");
+    random.execute();
+    random.stats();
+    random.save("Random(10000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 100,000 set
+    random.load("Random(100000).txt");
+    random.execute();
+    random.stats();
+    random.save("Random(100000)Stats.txt");
 
-    sort two;
-    two.load("set2.csv");
-    two.execute();
-    two.display();
-    two.stats();
-    two.save("Set2_Stats.txt");
+}
 
-    sort three;
-    three.load("set3.csv");
-    three.execute();
-    three.display();
-    three.stats();
-    three.save("Set3_Stats.txt");
+void SortBackwards()
+{
+    sort random;
+    //Sorts 10 set
+    random.load("Backwards(10).txt");
+    random.execute();
+    random.stats();
+    random.save("Backwards(10)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 1000 set
+    random.load("Backwards(1000).txt");
+    random.execute();
+    random.stats();
+    random.save("Backwards(1000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 10,000 set
+    random.load("Backwards(10000).txt");
+    random.execute();
+    random.stats();
+    random.save("Backwards(10000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 100,000 set
+    random.load("Backwards(100000).txt");
+    random.execute();
+    random.stats();
+    random.save("Backwards(100000)Stats.txt");
+}
 
-    sort four;
-    four.load("set4.csv");
-    four.execute();
-    four.display();
-    four.stats();
-    four.save("Set4_Stats.txt");
+void Sort20Percent()
+{
+    sort random;
+    //Sorts 10 set
+    random.load("20%(10).txt");
+    random.execute();
+    random.stats();
+    random.save("20%(10)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 1000 set
+    random.load("20%(1000).txt");
+    random.execute();
+    random.stats();
+    random.save("20%(1000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 10,000 set
+    random.load("20%(10000).txt");
+    random.execute();
+    random.stats();
+    random.save("20%(10000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 100,000 set
+    random.load("20%(100000).txt");
+    random.execute();
+    random.stats();
+    random.save("20%(100000)Stats.txt");
+}
 
+void Sort30Percent()
+{
+    sort random;
+    //Sorts 10 set
+    random.load("30%(10).txt");
+    random.execute();
+    random.stats();
+    random.save("30%(10)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 1000 set
+    random.load("30%(1000).txt");
+    random.execute();
+    random.stats();
+    random.save("30%(1000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 10,000 set
+    random.load("30%(10000).txt");
+    random.execute();
+    random.stats();
+    random.save("30%(10000)Stats.txt");
+    cout << "====================" << endl;
+    //Sorts 100,000 set
+    random.load("30%(100000).txt");
+    random.execute();
+    random.stats();
+    random.save("30%(100000)Stats.txt");
 }

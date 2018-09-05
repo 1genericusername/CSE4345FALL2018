@@ -3,9 +3,9 @@
 #include "algorithm.h"
 #include <fstream>
 #include <sstream>
-#include <chrono>
 using namespace std;
 
+void runSort();
 
 class sort : public algorithm
 {
@@ -17,7 +17,6 @@ class sort : public algorithm
         string time3;
 
     public:
-        //loads file into program
         void load(string filename)
         {
             ifstream inFile;
@@ -25,8 +24,7 @@ class sort : public algorithm
             inFile.open(filename);
             file = filename;
             int entry;
-            string str;
-                while(std::getline(inFile, str))
+                while(!inFile.eof())
                 {
                     inFile >> entry;
                     dataset.push_back(entry);
@@ -34,7 +32,6 @@ class sort : public algorithm
 
         }
 
-        //Print the unsorted vector
         void print()
         {
             for(int i=0;i<dataset.size();i++)
@@ -43,7 +40,6 @@ class sort : public algorithm
             }
         }
 
-        //Sort set and time it
         void execute()
         {
             vector<int> temp1 = dataset;
@@ -54,18 +50,20 @@ class sort : public algorithm
                     timer::time_point start_time = timer::now();
             bubblesort(temp1);
             timer::time_point end_time = timer::now();
+                cout << "Total Time for BubbleSort: " << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count() << "ms" << endl;
 
             //Time for MergeSort
             using timer = std::chrono::high_resolution_clock;
                     timer::time_point start_time2 = timer::now();
-            MergeSort(temp2,0,temp2.size()-1);
-                    timer::time_point end_time2 = timer::now();
-
+            MergeSort(temp2,0,temp2.size());
+            timer::time_point end_time2 = timer::now();
+                cout << "Total Time for MergeSort " << chrono::duration_cast<std::chrono::milliseconds>(end_time2 - start_time2).count() << "ms" << endl;
             //Time for Insertion Sort
             using timer = std::chrono::high_resolution_clock;
                     timer::time_point start_time3 = timer::now();
             insertionsort(temp3,temp3.size());
             timer::time_point end_time3 = timer::now();
+                cout << "Total Time for Insertion Sort " << chrono::duration_cast<std::chrono::milliseconds>(end_time3 - start_time3).count() << "ms" << endl;
 
             //Save time variables
             ostringstream x,y,z;
@@ -75,12 +73,8 @@ class sort : public algorithm
             time2 = y.str();
             z << chrono::duration_cast<std::chrono::milliseconds>(end_time3 - start_time3).count();
             time3 = z.str();
-
-            dataset = temp1;
-
         }
 
-        //print sorted vector to screen
         void display()
         {
             insertionsort(dataset,dataset.size());
@@ -92,7 +86,6 @@ class sort : public algorithm
             cout << "===============================================" << endl;
         }
 
-        //Print the size of the dataset,method and time it took
         void stats()
         {
             cout << "To sort this data set of size " << dataset.size() << " using the bubblesort method took " << time1 << " ms." << endl;
@@ -100,32 +93,22 @@ class sort : public algorithm
             cout << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
         }
 
-        //Save stats to a file
         void save(string filename)
         {
             ofstream writefile;
             writefile.open(filename);
-            writefile << "\n";
-            writefile << "===========================================================================" << "\n" << endl;
-            writefile << "To sort this data set of size " << dataset.size() << " using the bubblesort method took " << time1 << " ms." << endl;
-            writefile << "To sort this data set of size " << dataset.size() << " using the mergesort method took " << time2 << " ms." << endl;
-            writefile << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
-            writefile << "===========================================================================" << "\n" << endl;
             for(int i=0;i<dataset.size();i++)
             {
                 writefile << dataset[i];
                 writefile << ',';
             }
-
-            dataset.clear();
+            writefile << "\n";
+            writefile << "===========================================================================" << "\n" << endl;
+            writefile << "To sort this data set of size " << dataset.size() << " using the bubblesort method took " << time1 << " ms." << endl;
+            writefile << "To sort this data set of size " << dataset.size() << " using the mergesort method took " << time2 << " ms." << endl;
+            writefile << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
         }
 
-
 };
-
-void SortRandom();
-void SortBackwards();
-void Sort20Percent();
-void Sort30Percent();
 
 #endif // SORT_H
