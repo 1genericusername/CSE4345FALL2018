@@ -1,8 +1,8 @@
 
 ===========================================================================
 
-To sort this data set of size 10000 using the bubblesort method took 51 ms.
-To sort this data set of size 10000 using the mergesort method took 1 ms.
+To sort this data set of size 10000 using the bubblesort method took 52 ms.
+To sort this data set of size 10000 using the mergesort method took 0 ms.
 To sort this data set of size 10000 using the insert sort method took 5 ms.
 ===========================================================================
 

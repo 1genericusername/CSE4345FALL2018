@@ -4,10 +4,10 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
-using namespace std;
 
 
-class sort : public algorithm
+
+class Sort : public algorithm
 {
     private:
     vector<int> dataset;

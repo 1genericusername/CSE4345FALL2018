@@ -4,11 +4,11 @@
 #include "bubble.h"
 #include "insertion.h"
 #include "merge.h"
-using namespace std;
+
 
 void SortRandom()
 {
-    sort random;
+    Sort random;
     //Sorts 10 set
     random.load("Random(10).txt");
     random.execute();
@@ -37,7 +37,7 @@ void SortRandom()
 
 void SortBackwards()
 {
-    sort random;
+    Sort random;
     //Sorts 10 set
     random.load("Backwards(10).txt");
     random.execute();
@@ -65,7 +65,7 @@ void SortBackwards()
 
 void Sort20Percent()
 {
-    sort random;
+    Sort random;
     //Sorts 10 set
     random.load("20%(10).txt");
     random.execute();
@@ -93,7 +93,7 @@ void Sort20Percent()
 
 void Sort30Percent()
 {
-    sort random;
+    Sort random;
     //Sorts 10 set
     random.load("30%(10).txt");
     random.execute();

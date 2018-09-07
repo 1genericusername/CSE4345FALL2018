@@ -4,9 +4,8 @@
 #include "bubble.h"
 #include "insertion.h"
 #include "merge.h"
-using namespace std;
 
-void sort::load(string filename)
+void Sort::load(string filename)
 {
     ifstream inFile;
     ofstream writefile;
@@ -21,7 +20,7 @@ void sort::load(string filename)
         }
 }
 
-void sort::print()
+void Sort::print()
 {
     for(int i=0;i<dataset.size();i++)
     {
@@ -29,7 +28,7 @@ void sort::print()
     }
 }
 
-void sort::execute()
+void Sort::execute()
 {
     vector<int> temp1 = dataset;
     vector<int> temp2 = dataset;
@@ -65,7 +64,7 @@ void sort::execute()
 
 }
 
-void sort::display()
+void Sort::display()
 {
     insertionsort(dataset,dataset.size());
     for(int i=0;i<dataset.size();i++)
@@ -76,14 +75,14 @@ void sort::display()
     cout << "===============================================" << endl;
 }
 
-void sort::stats()
+void Sort::stats()
 {
     cout << "To sort this data set of size " << dataset.size() << " using the bubblesort method took " << time1 << " ms." << endl;
     cout << "To sort this data set of size " << dataset.size() << " using the mergesort method took " << time2 << " ms." << endl;
     cout << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
 }
 
-void sort::save(string filename)
+void Sort::save(string filename)
 {
     ofstream writefile;
     writefile.open(filename);
