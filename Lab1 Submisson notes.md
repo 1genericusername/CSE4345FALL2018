@@ -1,1 +1,0 @@
-My submisson is in QT files and for it to run both Lab1 and Lab1 relase are needed as I used QT Creator.
