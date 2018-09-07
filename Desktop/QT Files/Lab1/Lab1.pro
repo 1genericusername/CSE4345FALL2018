@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     createfile.cpp \
     insertion.cpp \
     merge.cpp \
-    sort.cpp
+    sort.cpp \
+    run.cpp
 
 HEADERS += \
     algorithm.h \
@@ -16,4 +17,5 @@ HEADERS += \
     createfile.h \
     insertion.h \
     merge.h \
-    sort.h
+    sort.h \
+    run.h

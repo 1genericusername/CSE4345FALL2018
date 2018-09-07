@@ -5,7 +5,8 @@
 #include "bubble.h"
 #include "insertion.h"
 #include "createfile.h"
-#include "sort.h"
+//#include "sort.h"
+#include "run.h"
 using namespace std;
 
 int main()

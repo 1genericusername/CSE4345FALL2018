@@ -6,115 +6,101 @@
 #include "merge.h"
 using namespace std;
 
-void SortRandom()
+void sort::load(string filename)
 {
-    sort random;
-    //Sorts 10 set
-    random.load("Random(10).txt");
-    random.execute();
-    random.stats();
-    random.save("Random(10)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 1000 set
-    random.load("Random(1000).txt");
-    random.execute();
-    random.stats();
-    random.save("Random(1000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 10,000 set
-    random.load("Random(10000).txt");
-    random.execute();
-    random.stats();
-    random.save("Random(10000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 100,000 set
-    random.load("Random(100000).txt");
-    random.execute();
-    random.stats();
-    random.save("Random(100000)Stats.txt");
+    ifstream inFile;
+    ofstream writefile;
+    inFile.open(filename);
+    file = filename;
+    int entry;
+    string str;
+        while(std::getline(inFile, str))
+        {
+            inFile >> entry;
+            dataset.push_back(entry);
+        }
+}
+
+void sort::print()
+{
+    for(int i=0;i<dataset.size();i++)
+    {
+        cout << dataset[i] << endl;
+    }
+}
+
+void sort::execute()
+{
+    vector<int> temp1 = dataset;
+    vector<int> temp2 = dataset;
+    vector<int> temp3 = dataset;
+    //Time for bubblesort
+    using timer = std::chrono::high_resolution_clock;
+            timer::time_point start_time = timer::now();
+    bubblesort(temp1);
+    timer::time_point end_time = timer::now();
+
+    //Time for MergeSort
+    using timer = std::chrono::high_resolution_clock;
+            timer::time_point start_time2 = timer::now();
+    MergeSort(temp2,0,temp2.size()-1);
+            timer::time_point end_time2 = timer::now();
+
+    //Time for Insertion Sort
+    using timer = std::chrono::high_resolution_clock;
+            timer::time_point start_time3 = timer::now();
+    insertionsort(temp3,temp3.size());
+    timer::time_point end_time3 = timer::now();
+
+    //Save time variables
+    ostringstream x,y,z;
+    x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    time1 = x.str();
+    y << chrono::duration_cast<std::chrono::milliseconds>(end_time2 - start_time2).count();
+    time2 = y.str();
+    z << chrono::duration_cast<std::chrono::milliseconds>(end_time3 - start_time3).count();
+    time3 = z.str();
+
+    dataset = temp1;
 
 }
 
-void SortBackwards()
+void sort::display()
 {
-    sort random;
-    //Sorts 10 set
-    random.load("Backwards(10).txt");
-    random.execute();
-    random.stats();
-    random.save("Backwards(10)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 1000 set
-    random.load("Backwards(1000).txt");
-    random.execute();
-    random.stats();
-    random.save("Backwards(1000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 10,000 set
-    random.load("Backwards(10000).txt");
-    random.execute();
-    random.stats();
-    random.save("Backwards(10000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 100,000 set
-    random.load("Backwards(100000).txt");
-    random.execute();
-    random.stats();
-    random.save("Backwards(100000)Stats.txt");
+    insertionsort(dataset,dataset.size());
+    for(int i=0;i<dataset.size();i++)
+    {
+        cout << dataset[i] << ',';
+    }
+    cout << endl;
+    cout << "===============================================" << endl;
 }
 
-void Sort20Percent()
+void sort::stats()
 {
-    sort random;
-    //Sorts 10 set
-    random.load("20%(10).txt");
-    random.execute();
-    random.stats();
-    random.save("20%(10)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 1000 set
-    random.load("20%(1000).txt");
-    random.execute();
-    random.stats();
-    random.save("20%(1000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 10,000 set
-    random.load("20%(10000).txt");
-    random.execute();
-    random.stats();
-    random.save("20%(10000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 100,000 set
-    random.load("20%(100000).txt");
-    random.execute();
-    random.stats();
-    random.save("20%(100000)Stats.txt");
+    cout << "To sort this data set of size " << dataset.size() << " using the bubblesort method took " << time1 << " ms." << endl;
+    cout << "To sort this data set of size " << dataset.size() << " using the mergesort method took " << time2 << " ms." << endl;
+    cout << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
 }
 
-void Sort30Percent()
+void sort::save(string filename)
 {
-    sort random;
-    //Sorts 10 set
-    random.load("30%(10).txt");
-    random.execute();
-    random.stats();
-    random.save("30%(10)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 1000 set
-    random.load("30%(1000).txt");
-    random.execute();
-    random.stats();
-    random.save("30%(1000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 10,000 set
-    random.load("30%(10000).txt");
-    random.execute();
-    random.stats();
-    random.save("30%(10000)Stats.txt");
-    cout << "====================" << endl;
-    //Sorts 100,000 set
-    random.load("30%(100000).txt");
-    random.execute();
-    random.stats();
-    random.save("30%(100000)Stats.txt");
+    ofstream writefile;
+    writefile.open(filename);
+    writefile << "\n";
+    writefile << "===========================================================================" << "\n" << endl;
+    writefile << "To sort this data set of size " << dataset.size() << " using the bubblesort method took " << time1 << " ms." << endl;
+    writefile << "To sort this data set of size " << dataset.size() << " using the mergesort method took " << time2 << " ms." << endl;
+    writefile << "To sort this data set of size " << dataset.size() << " using the insert sort method took " << time3 << " ms." << endl;
+    writefile << "===========================================================================" << "\n" << endl;
+    for(int i=0;i<dataset.size();i++)
+    {
+        writefile << dataset[i];
+        writefile << ',';
+    }
+
+    dataset.clear();
 }
+
+
+
