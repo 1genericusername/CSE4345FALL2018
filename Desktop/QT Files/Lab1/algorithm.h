@@ -6,12 +6,11 @@
 #include "vector"
 #include <chrono>
 #include "iostream"
-using namespace std;
 
 class algorithm
 {
     public:
-    virtual void load(string filename) = 0;
+    virtual void load(std::string filename) = 0;
 
     virtual void execute() = 0;
 

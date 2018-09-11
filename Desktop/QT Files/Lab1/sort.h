@@ -10,16 +10,16 @@
 class Sort : public algorithm
 {
     private:
-    vector<int> dataset;
-    string file;
-    string time1;
-    string time2;
-    string time3;
+    std::vector<int> dataset;
+    std::string file;
+    std::string time1;
+    std::string time2;
+    std::string time3;
 
     public:
 
         //loads file into program
-        void load(string filename);
+        void load(std::string filename);
 
         //Print the unsorted vector
         void print();
@@ -35,7 +35,7 @@ class Sort : public algorithm
         void stats();
 
         //Save stats to a file
-        void save(string filename);
+        void save(std::string filename);
 
 };
 

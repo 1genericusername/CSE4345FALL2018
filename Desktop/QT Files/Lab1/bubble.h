@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include "vector"
-using namespace std;
+
 
 //template <typename T>
-    void bubblesort(vector<int> &init);
+void bubblesort(std::vector<int> &init);
 
 
 

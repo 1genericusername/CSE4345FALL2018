@@ -2,12 +2,12 @@
 #define MERGE_H
 
 #include <iostream>
-#include "vector"
-using namespace std;
+#include <vector>
 
 
-void merge(vector<int> &arr, int left, int m, int right);
-void MergeSort(vector<int> &arr, int left, int right);
+
+void merge(std::vector<int> &arr, int left, int m, int right);
+void MergeSort(std::vector<int> &arr, int left, int right);
 
 
 #endif // MERGE_H
