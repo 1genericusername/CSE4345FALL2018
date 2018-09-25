@@ -21,6 +21,11 @@ void Sort::load(string filename)
         }
 }
 
+void Sort::load(string filename, string filename2)
+{
+    cout << filename << " " << filename2 << endl;
+}
+
 void Sort::Display()
 {
     for(unsigned int i=0;i<dataset.size();i++)

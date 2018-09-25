@@ -15,6 +15,8 @@ class Algorithm
 
     virtual void load(std::string filename);
 
+    virtual void load(std::string filename, std::string filename2);
+
     virtual void Display();
 
     virtual void stats();

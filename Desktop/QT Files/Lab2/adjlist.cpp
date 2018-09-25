@@ -4,11 +4,8 @@ AdjList::AdjList(int size)
 {
     numVertices = size+1;
     adjlist = new list<pair<int,int>>[size+1];
-    visited = new bool[size+1];
-    for(int i=0;i<size+1;i++)
-    {
-        visited[i] = false;
-    }
+
+    positions = new list<pair<int,int>>[size+1];
 }
 
 void AdjList::addVertice(int source, int destination, int weight)
@@ -32,9 +29,20 @@ void AdjList::printlist()
             }
             cout << "\n";
         }
+
+    for (int i = 1; i < numVertices; i++)
+        {
+    for (auto Iterator = positions[i].begin(); Iterator!=positions[i].end(); Iterator++)
+    {
+        destination = Iterator->first;
+        weight = Iterator->second;
+        cout << "X:" << destination << "Y:"
+             << weight << "\n";
+    }
+    }
 }
 
-void AdjList::buildList(string filename)
+void AdjList::buildList(string filename, string filename2)
 {
     int Node1,Node2,weight;
     string line;
@@ -47,7 +55,23 @@ void AdjList::buildList(string filename)
         getline(inFile,line,',');
         inFile >> weight;
         addVertice(Node1,Node2,weight);
+
     }
+    inFile.close();
+
+    int node,x,y;
+    inFile.open(filename2);
+    while(inFile >> node)
+    {
+        getline(inFile,line,',');
+        inFile >> x;
+        getline(inFile,line,',');
+        inFile >> y;
+        getline(inFile,line,',');
+        positions[node].push_back(make_pair(x,y));
+        inFile >> node;
+    }
+
 }
 
 
@@ -58,44 +82,94 @@ void AdjList::BFS(int source, int d)
         for(int i = 0; i < numVertices; i++)
             visited[i] = false;
 
-        // Create a queue for BFS
-        list<int> queue;
+        // Create a Queue for BFS
+        list<int> Queue;
         int destination;
 
-        // Mark the current node as visited and enqueue it
+        // Mark the current node as visited and enQueue it
         visited[source] = true;
-        queue.push_back(source);
+        Queue.push_back(source);
 
         // 'i' will be used to get all adjacent
         // vertices of a vertex
 
-        while(!queue.empty())
+        while(!Queue.empty())
         {
-            // Dequeue a vertex from queue and print it
-            source = queue.front();
+            // DeQueue a vertex from Queue and print it
+            source = Queue.front();
             cout << source << " ";
 
-            if(queue.front() == d)
+            if(Queue.front() == d)
             {
                 break;
             }
 
-            queue.pop_front();
+            Queue.pop_front();
 
-            // Get all adjacent vertices of the dequeued
+            // Get all adjacent vertices of the deQueued
             // vertex s. If a adjacent has not been visited,
-            // then mark it visited and enqueue it
+            // then mark it visited and enQueue it
             for (auto i = adjlist[source].begin(); i != adjlist[source].end(); ++i)
             {
                 destination = i->first;
                 if (visited[destination] == false)
                 {
                     visited[destination] = true;
-                    queue.push_back(destination);
+                    Queue.push_back(destination);
                 }
             }
 
         }
+}
+
+void AdjList::BFSREC(int s, int d, bool visited[], list<int> Queue)
+{
+    // Mark the current node as visited and
+        // print it
+    s = Queue.front();
+    cout << s << " ";
+
+    if(Queue.front() != d)
+    {
+
+        Queue.pop_front();
+        // Recur for all the vertices adjacent
+        // to this vertex
+
+        int destination = 0;
+
+        for (auto i = adjlist[s].begin(); i != adjlist[s].end(); ++i)
+        {
+            destination = i->first;
+            if (visited[destination] == false)
+            {
+                visited[destination] = true;
+                Queue.push_back(destination);
+            }
+        }
+        BFSREC(destination,d, visited, Queue);
+     }
+}
+
+// DFS traversal of the vertices reachable from v.
+// It uses recursive DFSUtil()
+void AdjList::BFSR(int s, int d)
+{
+        // Mark all the vertices as not visited
+        bool *visited = new bool[numVertices];
+        for(int i = 0; i < numVertices; i++)
+            visited[i] = false;
+
+        // Create a Queue for BFS
+        list<int> Queue;
+
+        // Mark the current node as visited and enQueue it
+        visited[s] = true;
+        Queue.push_back(s);
+
+        // Call the recursive helper function
+        // to print DFS traversal
+        BFSREC(s,d, visited, Queue);
 }
 
 void AdjList::DFS(int s, int d)
@@ -105,22 +179,19 @@ void AdjList::DFS(int s, int d)
     for(int i = 0; i < numVertices; i++)
         visited[i] = false;
 
-        // Create a stack for DFS
-        list<int> stack;
+        // Create a Stack for DFS
+        list<int> Stack;
 
         // Push the current source node.
-        stack.push_front(s);
+        Stack.push_front(s);
 
-        while (!stack.empty())
+        while (!Stack.empty())
         {
 
-            // Pop a vertex from stack and print it
-            s = stack.front();
-            stack.pop_front();
+            // Pop a vertex from Stack and print it
+            s = Stack.front();
+            Stack.pop_front();
 
-            // Stack may contain same vertex twice. So
-            // we need to print the popped item only
-            // if it is not visited.
             if (!visited[s])
             {
                 cout << s << endl;
@@ -131,29 +202,23 @@ void AdjList::DFS(int s, int d)
                 }
             }
 
-
-
-            // Get all adjacent vertices of the popped vertex s
-            // If a adjacent has not been visited, then puah it
-            // to the stack.
             for (auto i = adjlist[s].begin(); i != adjlist[s].end(); ++i)
             {
                 int dest = i->first;
                 if (visited[dest] == false)
-                    stack.push_front(dest);
+                    Stack.push_front(dest);
             }
-
         }
 
 }
 
-void AdjList::DFSREC(int s, int d, bool visited[], list<int> stack)
+void AdjList::DFSREC(int s, int d, bool visited[], list<int> Stack)
 {
     // Mark the current node as visited and
         // print it
 
-    s = stack.front();
-    stack.pop_front();
+    s = Stack.front();
+    Stack.pop_front();
 
     // Stack may contain same vertex twice. So
     // we need to print the popped item only
@@ -170,18 +235,17 @@ void AdjList::DFSREC(int s, int d, bool visited[], list<int> stack)
         // Recur for all the vertices adjacent
         // to this vertex
 
-        int dest;
+        int dest = 0;
 
         for (auto i = adjlist[s].begin(); i != adjlist[s].end(); ++i)
         {
             dest = i->first;
             if (visited[dest] == false)
             {
-                stack.push_front(dest);
-              //  DFSUtil(dest, visited, stack);
+                Stack.push_front(dest);
             }
         }
-        DFSREC(dest,d, visited, stack);
+        DFSREC(dest,d, visited, Stack);
      }
 }
 
@@ -194,12 +258,129 @@ void AdjList::DFSR(int s, int d)
         for (int i = 0; i < numVertices; i++)
             visited[i] = false;
 
-        list<int> stack;
+        list<int> Stack;
 
-        stack.push_front(s);
+        Stack.push_front(s);
 
         // Call the recursive helper function
         // to print DFS traversal
-        DFSREC(s,d, visited, stack);
+        DFSREC(s,d, visited, Stack);
 }
+
+double AdjList::heuristic(double x1, double y1, double x2, double y2, int cost)
+{
+   double dist = pow(pow(x2-x1,2)+pow(y2-y1,2),0.5);
+   double heur = dist*(1+cost);
+   return heur;
+}
+
+void AdjList::A_star(int source, int destination)
+{
+        list<int> stack;
+        vector<double> tempvector;
+        vector<int> nodes;
+
+        bool *visited = new bool[numVertices];
+        for(int i = 0; i < numVertices; i++)
+            visited[i] = false;
+
+        stack.push_back(source);
+
+        while (!stack.empty())
+        {
+            source = stack.front();
+            stack.pop_front();
+
+            if(!visited[source])
+            {
+                cout << source << endl;
+                visited[source] = true;
+                if(visited[destination] == true)
+                {
+                    break;
+                }
+            }
+
+            for (auto i = adjlist[source].begin(); i != adjlist[source].end(); ++i)
+            {
+                int v = i->first;
+                int weight = i->second;
+                auto one = positions[v].begin();
+                auto two = positions[destination].begin();
+                double temp = heuristic(one->first,one->second,two->first,two->second,weight);
+                tempvector.push_back(temp);
+                nodes.push_back(v);
+            }
+
+            double smallest = tempvector[0];
+            int smallestL = nodes[0];
+                for(unsigned int i=0;i<tempvector.size();i++)
+                {
+                    if(tempvector[i]<smallest)
+                    {
+                        smallest=tempvector[i];
+                        smallestL = nodes[i];
+                    }
+                }
+
+                stack.push_back(smallestL);
+
+                tempvector.clear();
+                nodes.clear();
+        }
+
+}
+
+void AdjList::dijkstra(int source, int destination)
+{
+        list<pair<int,int>> pq;
+
+        //vector<int> dist(numVertices, INT_MAX);
+        int dist[numVertices];
+        for (int i = 0; i < numVertices; i++)
+        {
+            dist[i] = INT_MAX;
+        }
+
+        // Insert source itself in priority Queue and initialize
+        // its distance as 0.
+        pq.push_back(make_pair(0, source));
+        dist[source] = 0;
+
+        /* Looping till priority Queue becomes empty (or all
+          distances are not finalized) */
+        while (!pq.empty())
+        {
+            int u = pq.front().second;
+            pq.pop_front();
+
+            for (auto i = adjlist[u].begin(); i != adjlist[u].end(); ++i)
+            {
+                // Get vertex label and weight of current adjacent
+                // of u.
+                int v = i->first;
+                int weight = i->second;
+
+                //  If there is shorted path to v through u.
+                if (dist[v] > dist[u] + weight)
+                {
+                    // Updating distance of v
+                    dist[v] = dist[u] + weight;
+                    pq.push_back(make_pair(dist[v], v));
+                }
+            }
+
+            if(dist[destination] != INT_MAX)
+            {
+                break;
+            }
+        }
+
+        // Print shortest distances stored in dist[]
+  //      printf("Vertex   Distance from Source\n");
+   //     for (int i = 1; i < numVertices; ++i)
+     //       printf("%d \t\t %d\n", i, dist[i]);
+        cout << "The shortest path from " << source << " to " << destination << " is " << dist[destination] << endl;
+}
+
 

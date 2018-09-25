@@ -4,6 +4,7 @@
 #include "fstream"
 #include <vector>
 #include <ostream>
+#include <math.h>
 #include <list>
 #include <string>
 #include <queue>
@@ -15,6 +16,7 @@ class AdjMatrix
     private:
         int** adjMatrix;
         int numVertices;
+        list<pair<int,int>>* positions;
 
     public:
         AdjMatrix(int numVertices);
@@ -29,15 +31,32 @@ class AdjMatrix
 
         void printMatrix();
 
-        void buildMatrix(string filename);
+        void buildMatrix(string filename, string filename2);
 
         void printAllPathsUtil(int source, int distance,bool visited[],int path[],int& path_index);
 
-        void DFS(int source, int destination);
+        //Algorithm 1
+        void BFS(int source, int dest);
 
+        //Algorithm 2
+        void BFSREC(int s,int d, bool visited[], list<int> stack);
+        void BFSR(int source, int dest);
+
+        //Algorithm 3
+        void DFS(int s, int dest);
+
+        //Algorithm 4
+        void DFSREC(int s,int d, bool visited[], list<int> stack);
+        void DFSR(int source, int dest);
+
+        //Algorithm 5
+        double heuristic(double x1, double y1, double x2, double y2, int cost);
+        void AStar(int source, int destination);
+
+        //Algorithm 6
         void dijkstra(int source, int destination);
 
-        void AStar(int source, int destination);
+
 
         ~AdjMatrix();
 

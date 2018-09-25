@@ -8,8 +8,6 @@
 #include <chrono>
 using namespace std;
 
-//template <typename T>
-//void bubblesort(std::vector<int> &init);
 
 
 class Bubble: public SortBehavior

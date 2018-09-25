@@ -1,0 +1,17 @@
+INPUT(
+./debug\main.o
+./debug\bubble.o
+./debug\createfile.o
+./debug\insertion.o
+./debug\merge.o
+./debug\run.o
+./debug\sort.o
+./debug\adjmatrix.o
+./debug\adjlist.o
+./debug\bfs.o
+./debug\bfsr.o
+./debug\dfs.o
+./debug\dfsr.o
+./debug\astar.o
+./debug\dijkstra.o
+);

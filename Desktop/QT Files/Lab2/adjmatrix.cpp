@@ -2,7 +2,6 @@
 #include "iostream"
 #include "fstream"
 
-
 //Constructor
 AdjMatrix::AdjMatrix(int numVertices)
 {
@@ -16,6 +15,8 @@ AdjMatrix::AdjMatrix(int numVertices)
             adjMatrix[i][j] = 0;
         }
   }
+
+    positions = new list<pair<int,int>>[numVertices+1];
 }
 
 //Add Vertice
@@ -64,10 +65,11 @@ void AdjMatrix::printMatrix()
         cout << "\n";
     }
 
+
 }
 
 //Load file into matrix
-void AdjMatrix::buildMatrix(std::string filename)
+void AdjMatrix::buildMatrix(std::string filename,string filename2)
 {
     int Node1,Node2,weight;
     string line;
@@ -81,15 +83,273 @@ void AdjMatrix::buildMatrix(std::string filename)
         inFile >> weight;
         addweightedVertice(Node1,Node2,weight);
     }
+
+    inFile.close();
+
+    int node,x,y;
+    inFile.open(filename2);
+    while(inFile >> node)
+    {
+        getline(inFile,line,',');
+        inFile >> x;
+        getline(inFile,line,',');
+        inFile >> y;
+        getline(inFile,line,',');
+        positions[node].push_back(make_pair(x,y));
+        inFile >> node;
+    }
+
 }
 
-void AdjMatrix::DFS(int source,int destination)
+void AdjMatrix::BFS(int source,int dest)
 {
-    bool* visited = new bool[numVertices];
+    // Mark all the vertices as not visited
+        bool *visited = new bool[numVertices];
+        for(int i = 0; i < numVertices; i++)
+            visited[i] = false;
+
+        // Create a queue for BFS
+        list<int> queue;
+
+        // Mark the current node as visited and enqueue it
+        visited[source] = true;
+        queue.push_back(source);
+
+        // 'i' will be used to get all adjacent
+        // vertices of a vertex
+
+        while(!queue.empty())
+        {
+            // Dequeue a vertex from queue and print it
+            source = queue.front();
+            cout << source << " ";
+
+            if(queue.front() == dest)
+            {
+                break;
+            }
+
+            queue.pop_front();
+
+            for (int i = 0; i < numVertices; ++i){
+                    if(adjMatrix[source][i] != 0 && (! visited[i]) )
+                    {
+                        queue.push_back(i);
+                        visited[i] = true;
+                    }
+                }
+
+        }
 
 }
 
+void AdjMatrix::BFSREC(int source, int d, bool visited[], list<int> Queue)
+{
+    source = Queue.front();
+    cout << source << " ";
 
+    if(Queue.front() != d)
+    {
+    Queue.pop_front();
+    int destination = 0;
+    for (int i = 1; i < numVertices; ++i)
+    {
+            if(adjMatrix[source][i] != 0 && (! visited[i]))
+            {
+                destination = i;
+                Queue.push_back(i);
+                visited[i] = true;
+            }
+    }
+    BFSREC(destination,d, visited, Queue);
+    }
+}
+
+void AdjMatrix::BFSR(int source, int dest)
+{
+    // Mark all the vertices as not visited
+    bool *visited = new bool[numVertices];
+    for(int i = 0; i < numVertices; i++)
+        visited[i] = false;
+
+    // Create a queue for BFS
+    list<int> Queue;
+
+    // Mark the current node as visited and enqueue it
+    visited[source] = true;
+    Queue.push_back(source);
+
+    BFSREC(source,dest, visited, Queue);
+}
+
+void AdjMatrix::DFSREC(int source, int d, bool visited[], list<int> Stack)
+{
+    source = Stack.front();
+    Stack.pop_front();
+
+    if (!visited[source])
+    {
+        cout << source << endl;
+        visited[source] = true;
+    }
+
+
+    if(Stack.front() != d)
+    {
+
+    int destination = 0;
+    for (int i = 1; i < numVertices; ++i)
+    {
+            if(adjMatrix[source][i] != 0 && (visited[i] == false))
+            {
+                destination = i;
+                Stack.push_front(i);
+         //       visited[i] = true;
+            }
+    }
+    DFSREC(destination,d, visited, Stack);
+    }
+}
+
+void AdjMatrix::DFSR(int source, int dest)
+{
+    // Mark all the vertices as not visited
+    bool *visited = new bool[numVertices];
+    for(int i = 0; i < numVertices; i++)
+        visited[i] = false;
+
+    // Create a queue for BFS
+    list<int> Stack;
+
+    // Mark the current node as visited and enqueue it
+   // visited[source] = true;
+    Stack.push_front(source);
+
+    DFSREC(source,dest, visited, Stack);
+}
+
+void AdjMatrix::DFS(int source, int dest)
+{
+    // Mark all the vertices as not visited
+        bool *visited = new bool[numVertices];
+        for(int i = 0; i < numVertices; i++)
+            visited[i] = false;
+
+        // Create a queue for BFS
+        list<int> Stack;
+
+        // Mark the current node as visited and enqueue it
+        Stack.push_front(source);
+
+        while(!Stack.empty())
+        {
+            // Dequeue a vertex from queue and print it
+            source = Stack.front();
+            Stack.pop_front();
+
+            if(!visited[source])
+            {
+                cout << source << endl;
+                visited[source] = true;
+                if(visited[dest] == true)
+                {
+                    break;
+                }
+            }
+
+
+            for (int i = 0; i < numVertices; ++i)
+            {
+                    if(adjMatrix[source][i] != 0 && visited[i] == false)
+                    {
+                            Stack.push_front(i);
+                    }
+
+             }
+
+        }
+}
+
+double AdjMatrix::heuristic(double x1, double y1, double x2, double y2, int cost)
+{
+   double dist = pow(pow(x2-x1,2)+pow(y2-y1,2),0.5);
+   double heur = dist*(1+cost);
+   return heur;
+}
+
+void AdjMatrix::AStar(int source, int dest)
+{
+
+    // Mark all the vertices as not visited
+        bool *visited = new bool[numVertices];
+        for(int i = 0; i < numVertices; i++)
+            visited[i] = false;
+
+        // Create a queue for BFS
+        list<int> Stack;
+        vector<double> tempvector;
+        vector<int> nodes;
+
+        // Mark the current node as visited and enqueue it
+        Stack.push_back(source);
+
+        while(!Stack.empty())
+        {
+            // Dequeue a vertex from queue and print it
+            source = Stack.front();
+            Stack.pop_front();
+
+            if(!visited[source])
+            {
+                cout << source << endl;
+                visited[source] = true;
+                if(visited[dest] == true)
+                {
+                    break;
+                }
+            }
+
+
+            for (int i = 0; i < numVertices; ++i)
+            {
+                    if(adjMatrix[source][i] != 0 && visited[i] == false )
+                    {
+                        auto one = positions[source].begin();
+                        auto two = positions[dest].begin();
+                        double temp = heuristic(one->first,one->second,two->first,two->second,adjMatrix[source][i]);
+                        tempvector.push_back(temp);
+                        nodes.push_back(i);
+                        if(i == dest)
+                        {
+                            nodes.clear();
+                            tempvector.clear();
+                            tempvector.push_back(temp);
+                            nodes.push_back(i);
+                        }
+                         //   Stack.push_back(i);
+                    }
+             }
+
+            double smallest = tempvector[0];
+            int smallestL = nodes[0];
+                for(unsigned int i=0;i<tempvector.size();i++)
+                {
+                    if(tempvector[i]<smallest)
+                    {
+                        smallest=tempvector[i];
+                        smallestL = nodes[i];
+                    }
+                }
+
+           Stack.push_back(smallestL);
+
+           tempvector.clear();
+           nodes.clear();
+
+        }
+
+
+}
 
 void AdjMatrix::dijkstra(int source,int destination)
 {
@@ -154,10 +414,6 @@ void AdjMatrix::dijkstra(int source,int destination)
 
 }
 
-void AdjMatrix::AStar(int source, int destination)
-{
-
-}
 
 //Matrix deconstructor
 AdjMatrix::~AdjMatrix()
@@ -168,5 +424,4 @@ AdjMatrix::~AdjMatrix()
     }
     delete[] adjMatrix;
 }
-
 

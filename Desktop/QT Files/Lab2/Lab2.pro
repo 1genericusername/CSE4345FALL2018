@@ -11,7 +11,13 @@ SOURCES += main.cpp \
     run.cpp \
     sort.cpp \
     adjmatrix.cpp \
-    adjlist.cpp
+    adjlist.cpp \
+    bfs.cpp \
+    bfsr.cpp \
+    dfs.cpp \
+    dfsr.cpp \
+    astar.cpp \
+    dijkstra.cpp
 
 HEADERS += \
     algorithm.h \
@@ -23,4 +29,11 @@ HEADERS += \
     sort.h \
     sortbehavior.h \
     adjmatrix.h \
-    adjlist.h
+    adjlist.h \
+    bfs.h \
+    bfsr.h \
+    dfs.h \
+    dfsr.h \
+    astar.h \
+    dijkstra.h \
+    pathbehavior.h

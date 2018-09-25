@@ -1,0 +1,17 @@
+INPUT(
+./release\main.o
+./release\bubble.o
+./release\createfile.o
+./release\insertion.o
+./release\merge.o
+./release\run.o
+./release\sort.o
+./release\adjmatrix.o
+./release\adjlist.o
+./release\bfs.o
+./release\bfsr.o
+./release\dfs.o
+./release\dfsr.o
+./release\astar.o
+./release\dijkstra.o
+);

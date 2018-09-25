@@ -2,21 +2,30 @@
 #define SORT_H
 #include "algorithm.h"
 #include "sortbehavior.h"
+#include "pathbehavior.h"
 #include "bubble.h"
 #include <fstream>
 #include <sstream>
+#include <list>
 #include <chrono>
 
 class SortBehavior;
+class PathBehavior;
 
 class Sort : public Algorithm
 {
     private:
+    SortBehavior* m_sort;
     vector<int> dataset;
     string file;
     string Time;
-    SortBehavior* m_sort;
     int SortType;
+    PathBehavior* m_path;
+    int** adjMatrix;
+    list<pair<int,int>>* adjlist;
+    list<pair<int,int>>* positions;
+
+
 
 
     public:
@@ -24,6 +33,9 @@ class Sort : public Algorithm
 
         //loads file into program
         void load(std::string filename);
+
+        //Load two files
+        void load(std::string filename, std::string filename2);
 
         //Print the vector
         void Display();
