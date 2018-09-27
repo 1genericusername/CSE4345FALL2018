@@ -1,34 +1,27 @@
 #include <iostream>
 #include "merge.h"
 #include "bubble.h"
+#include <stdio.h>
 #include "insertion.h"
 #include "sort.h"
 #include "adjmatrix.h"
 #include "adjlist.h"
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
+    Sort Graphs;
 
-    AdjMatrix g(17);
-    g.buildMatrix("weights.txt","positions.txt");
-//    g.DFS(1,16);
-//    g.printMatrix();
-  //  g.dijkstra(1,4);
+    Graphs.GrabUserInput(atoi(argv[1]),atoi(argv[2]));
 
-//    g.dijkstra(13,2);
+    for(int algorithms=0;algorithms<6;algorithms++)
+    {
+        for(int graphs=0;graphs<2;graphs++)
+        {
+            Graphs.execute(graphs,algorithms);
+        }
+    }
 
-
-    AdjList test(16);
-    test.buildList("weights.txt","positions.txt");
- //   test.printlist();
- //   test.BFS(1,16);
- //   cout << endl;
- //   test.BFSR(1,6);
-//    test.DFS(1,16);
- //   test.DFSR(1,6);
- //   test.BFS(1,8);
-    test.A_star(1,11);
 
 
 

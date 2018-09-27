@@ -9,7 +9,6 @@
 void Sort::load(string filename)
 {
     ifstream inFile;
-    ofstream writefile;
     inFile.open(filename);
     file = filename;
     int entry;
@@ -23,7 +22,7 @@ void Sort::load(string filename)
 
 void Sort::load(string filename, string filename2)
 {
-    cout << filename << " " << filename2 << endl;
+//    ifstream
 }
 
 void Sort::Display()
@@ -88,21 +87,57 @@ void Sort::save(int type)
 void Sort::select(int type)
 {
     SortType = type;
-    if(type == 1)
+    if(type == 0)
+    {
+        cout << "Breadth First Search" << endl;
+        m_path->BFS(userinput1,userinput2);
+    }
+    else if(type == 1)
+    {
+        cout << "Recursive Breadth First Search" << endl;
+        m_path->BFSR(userinput1,userinput2);
+    }
+    else if(type == 2)
+    {
+        cout << "Depth First Search" << endl;
+        m_path->DFS(userinput1,userinput2);
+    }
+    else if(type == 3)
+    {
+        cout << "Recursive Depth First Search" << endl;
+        m_path->DFSR(userinput1,userinput2);
+    }
+    else if(type == 4)
+    {
+        cout << "A* Search" << endl;
+        m_path->A_star(userinput1,userinput2);
+    }
+    else if(type == 5)
+    {
+        cout << "Dijkstra Search" << endl;
+        m_path->dijkstra(userinput1,userinput2);
+    }
+    else if(type == 6)
     {
         m_sort = new Bubble;
         m_sort ->sort(Time,dataset);
     }
-    else if(type == 2)
+    else if(type == 7)
     {
         m_sort = new Merge;
         m_sort ->sort(Time,dataset);
     }
-    else if(type == 3)
+    else if(type == 8)
     {
         m_sort = new Insertion;
         m_sort ->sort(Time,dataset);
     }
+}
+
+void::Sort::GrabUserInput(int one, int two)
+{
+    userinput1 = one;
+    userinput2 = two;
 }
 
 void Sort::execute(int type)
@@ -111,4 +146,24 @@ void Sort::execute(int type)
     stats();
     save(type);
     Display();
+}
+
+void Sort::execute(int type1, int type2)
+{
+    if(type1 == 0)
+    {
+        m_path = new AdjList(17);
+        m_path ->Build("weights.txt","positions.txt");
+        cout << "(Ajacency List)";
+    }
+    else if(type1 == 1)
+    {
+        m_path = new AdjMatrix(17);
+        m_path ->Build("weights.txt","positions.txt");
+        cout << "(Adjacency Matrix)";
+    }
+    select(type2);
+
+    cout << endl;
+    delete m_path;
 }

@@ -25,6 +25,10 @@ class Algorithm
 
     virtual void execute(int type) = 0;
 
+    virtual void GrabUserInput(int one, int two);
+
+    virtual void execute(int type1, int type2) = 0;
+
 };
 
 

@@ -1,6 +1,8 @@
 #ifndef SORT_H
 #define SORT_H
 #include "algorithm.h"
+#include "adjlist.h"
+#include "adjmatrix.h"
 #include "sortbehavior.h"
 #include "pathbehavior.h"
 #include "bubble.h"
@@ -10,6 +12,8 @@
 #include <chrono>
 
 class SortBehavior;
+//class AdjMatrix;
+//class AdjList;
 class PathBehavior;
 
 class Sort : public Algorithm
@@ -21,9 +25,13 @@ class Sort : public Algorithm
     string Time;
     int SortType;
     PathBehavior* m_path;
-    int** adjMatrix;
-    list<pair<int,int>>* adjlist;
-    list<pair<int,int>>* positions;
+    int userinput1;
+    int userinput2;
+  //  AdjMatrix AdjM;
+   // AdjList* AdjL;
+    //int** adjMatrix;
+    //list<pair<int,int>>* adjlist;
+    //list<pair<int,int>>* positions;
 
 
 
@@ -49,8 +57,12 @@ class Sort : public Algorithm
 
         void select(int type);
 
+        void GrabUserInput(int one, int two);
+
         //Sort set and time it
         void execute(int type);
+
+        void execute(int type1, int type2);
 };
 
 

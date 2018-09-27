@@ -1,4 +1,5 @@
 #include <adjlist.h>
+#include <time.h>
 
 AdjList::AdjList(int size)
 {
@@ -13,7 +14,7 @@ void AdjList::addVertice(int source, int destination, int weight)
     adjlist[source].push_back(make_pair(destination,weight));
 }
 
-void AdjList::printlist()
+void AdjList::Print()
 {
     int destination;
     int weight;
@@ -42,7 +43,7 @@ void AdjList::printlist()
     }
 }
 
-void AdjList::buildList(string filename, string filename2)
+void AdjList::Build(string filename, string filename2)
 {
     int Node1,Node2,weight;
     string line;
@@ -74,9 +75,21 @@ void AdjList::buildList(string filename, string filename2)
 
 }
 
-
-void AdjList::BFS(int source, int d)
+void AdjList::BFS(int Source, int Destination)
 {
+    int sourceV=Destination;
+    int destinationV=Source;
+
+    for(int i=0;i<2;i++)
+    {
+    if(i==1)
+    {
+       Source=sourceV;
+       Destination=destinationV;
+    }
+    using timer = std::chrono::high_resolution_clock;
+    timer::time_point start_time = timer::now();
+
     // Mark all the vertices as not visited
         bool *visited = new bool[numVertices];
         for(int i = 0; i < numVertices; i++)
@@ -84,11 +97,15 @@ void AdjList::BFS(int source, int d)
 
         // Create a Queue for BFS
         list<int> Queue;
+        vector<int> nodesVisited;
+        int totalDistance = 0;
+        list<int> cost;
+        vector<int> nodesPath;
         int destination;
 
         // Mark the current node as visited and enQueue it
-        visited[source] = true;
-        Queue.push_back(source);
+        visited[Source] = true;
+        Queue.push_back(Source);
 
         // 'i' will be used to get all adjacent
         // vertices of a vertex
@@ -96,65 +113,102 @@ void AdjList::BFS(int source, int d)
         while(!Queue.empty())
         {
             // DeQueue a vertex from Queue and print it
-            source = Queue.front();
-            cout << source << " ";
-
-            if(Queue.front() == d)
+            Source = Queue.front();
+            cout << Source << " ";
+            nodesPath.push_back(Source);
+            totalDistance += cost.front();
+            if(Queue.front() == Destination)
             {
                 break;
             }
 
             Queue.pop_front();
+            cost.pop_front();
 
             // Get all adjacent vertices of the deQueued
             // vertex s. If a adjacent has not been visited,
             // then mark it visited and enQueue it
-            for (auto i = adjlist[source].begin(); i != adjlist[source].end(); ++i)
+            for (auto i = adjlist[Source].begin(); i != adjlist[Source].end(); ++i)
             {
                 destination = i->first;
+                cost.push_back(i->second);
                 if (visited[destination] == false)
                 {
                     visited[destination] = true;
                     Queue.push_back(destination);
+                    nodesVisited.push_back(destination);
                 }
             }
 
         }
+        timer::time_point end_time = timer::now();
+        ostringstream x;
+        x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        string Time = x.str();
+        cout << endl;
+        cout << "NodesPathSize:" << nodesPath.size() << " NodesVisited:" << nodesVisited.size() << " Time:" << Time << " Distance:" << totalDistance << endl;
+        cout << "================================" << endl;
+    }
+
+
+
 }
 
-void AdjList::BFSREC(int s, int d, bool visited[], list<int> Queue)
+void AdjList::BFSREC(int Source,int Destination, bool visited[], list<int> Queue, vector<int>& nodesVisited, int& totalDistance, list<int>& cost,  vector<int>& nodesPath)
 {
-    // Mark the current node as visited and
-        // print it
-    s = Queue.front();
-    cout << s << " ";
 
-    if(Queue.front() != d)
+    // Mark the current node as visited and
+    Source = Queue.front();
+    cout << Source << " ";
+    nodesPath.push_back(Source);
+    totalDistance += cost.front();
+
+    if(Queue.front() != Destination)
     {
 
         Queue.pop_front();
+        cost.pop_front();
         // Recur for all the vertices adjacent
         // to this vertex
 
         int destination = 0;
 
-        for (auto i = adjlist[s].begin(); i != adjlist[s].end(); ++i)
+        for (auto i = adjlist[Source].begin(); i != adjlist[Source].end(); ++i)
         {
             destination = i->first;
+            cost.push_back(i->second);
             if (visited[destination] == false)
             {
                 visited[destination] = true;
                 Queue.push_back(destination);
+                nodesVisited.push_back(destination);
             }
         }
-        BFSREC(destination,d, visited, Queue);
+        BFSREC(destination,Destination, visited, Queue,nodesVisited,totalDistance,cost,nodesPath);
      }
+
 }
 
-// DFS traversal of the vertices reachable from v.
-// It uses recursive DFSUtil()
-void AdjList::BFSR(int s, int d)
-{
+void AdjList::BFSR(int Source, int Destination)
+{  
+    int sourceV=Destination;
+    int destinationV=Source;
+
+    for(int i=0;i<2;i++)
+    {
+    if(i==1)
+    {
+       Source=sourceV;
+       Destination=destinationV;
+    }
+    using timer = std::chrono::high_resolution_clock;
+    timer::time_point start_time = timer::now();
+
+        vector<int> nodesVisited;
+        int totalDistance = 0;
+        list<int> cost;
+        vector<int> nodesPath;
+
         // Mark all the vertices as not visited
         bool *visited = new bool[numVertices];
         for(int i = 0; i < numVertices; i++)
@@ -164,16 +218,41 @@ void AdjList::BFSR(int s, int d)
         list<int> Queue;
 
         // Mark the current node as visited and enQueue it
-        visited[s] = true;
-        Queue.push_back(s);
+        visited[Source] = true;
+        Queue.push_back(Source);
 
         // Call the recursive helper function
         // to print DFS traversal
-        BFSREC(s,d, visited, Queue);
+        BFSREC(Source,Destination, visited, Queue,nodesVisited,totalDistance,cost,nodesPath);
+
+        timer::time_point end_time = timer::now();
+        ostringstream x;
+        x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        string Time = x.str();
+
+        cout << endl;
+        cout << "NodesPathSize:" << nodesPath.size() << " NodesVisited:" << nodesVisited.size() << " Time:" << Time << " Distance:" << totalDistance << endl;
+        cout << "================================" << endl;
+    }
+
 }
 
 void AdjList::DFS(int s, int d)
 {
+
+    int sourceV=d;
+    int destinationV=s;
+
+    for(int i=0;i<2;i++)
+    {
+    if(i==1)
+    {
+       s=sourceV;
+       d=destinationV;
+    }
+    using timer = std::chrono::high_resolution_clock;
+    timer::time_point start_time = timer::now();
+
     // Initially mark all verices as not visited
     bool *visited = new bool[numVertices];
     for(int i = 0; i < numVertices; i++)
@@ -181,6 +260,10 @@ void AdjList::DFS(int s, int d)
 
         // Create a Stack for DFS
         list<int> Stack;
+        vector<int> nodesVisited;
+        int totalDistance = 0;
+        list<int> cost;
+        vector<int> nodesPath;
 
         // Push the current source node.
         Stack.push_front(s);
@@ -191,10 +274,13 @@ void AdjList::DFS(int s, int d)
             // Pop a vertex from Stack and print it
             s = Stack.front();
             Stack.pop_front();
+            nodesPath.push_back(s);
+            totalDistance += cost.front();
+
 
             if (!visited[s])
             {
-                cout << s << endl;
+                cout << s << " ";
                 visited[s] = true;
                 if(visited[d] == true)
                 {
@@ -206,26 +292,44 @@ void AdjList::DFS(int s, int d)
             {
                 int dest = i->first;
                 if (visited[dest] == false)
+                 {
+
+                    cost.push_front(i->second);
                     Stack.push_front(dest);
+                     nodesVisited.push_back(s);
+                 }
             }
         }
 
+        timer::time_point end_time = timer::now();
+        ostringstream x;
+        x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        string Time = x.str();
+
+        cout << endl;
+        cout << "NodesPathSize:" << nodesPath.size() << " NodesVisited:" << nodesVisited.size() << " Time:" << Time << " TotalDistance:" << totalDistance << endl;
+        cout << "================================" << endl;
+    }
+
+
 }
 
-void AdjList::DFSREC(int s, int d, bool visited[], list<int> Stack)
+void AdjList::DFSREC(int s, int d, bool visited[], list<int> Stack, vector<int>& nodesVisited, int& totalDistance, list<int>& cost,  vector<int>& nodesPath)
 {
     // Mark the current node as visited and
         // print it
 
     s = Stack.front();
     Stack.pop_front();
+    nodesPath.push_back(s);
+    totalDistance += cost.front();
 
     // Stack may contain same vertex twice. So
     // we need to print the popped item only
     // if it is not visited.
     if (!visited[s])
     {
-        cout << s << endl;
+        cout << s << " ";
         visited[s] = true;
     }
 
@@ -243,16 +347,34 @@ void AdjList::DFSREC(int s, int d, bool visited[], list<int> Stack)
             if (visited[dest] == false)
             {
                 Stack.push_front(dest);
+                cost.push_front(i->second);
+                nodesVisited.push_back(s);
             }
         }
-        DFSREC(dest,d, visited, Stack);
+        DFSREC(dest,d, visited, Stack, nodesVisited, totalDistance, cost, nodesPath);
      }
 }
 
-// DFS traversal of the vertices reachable from v.
-// It uses recursive DFSUtil()
 void AdjList::DFSR(int s, int d)
 {
+    int sourceV=d;
+    int destinationV=s;
+
+    for(int i=0;i<2;i++)
+    {
+    if(i==1)
+    {
+       s=sourceV;
+       d=destinationV;
+    }
+    using timer = std::chrono::high_resolution_clock;
+    timer::time_point start_time = timer::now();
+
+        vector<int> nodesVisited;
+        int totalDistance = 0;
+        list<int> cost;
+        vector<int> nodesPath;
+
     // Mark all the vertices as not visited
         bool *visited = new bool[numVertices];
         for (int i = 0; i < numVertices; i++)
@@ -264,7 +386,16 @@ void AdjList::DFSR(int s, int d)
 
         // Call the recursive helper function
         // to print DFS traversal
-        DFSREC(s,d, visited, Stack);
+        DFSREC(s,d, visited, Stack, nodesVisited, totalDistance, cost, nodesPath);
+
+        timer::time_point end_time = timer::now();
+        ostringstream x;
+        x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        string Time = x.str();
+        cout << endl;
+        cout << "NodesPathSize:" << nodesPath.size() << " NodesVisited:" << nodesVisited.size() << " Time:" << Time << " TotalDistance:" << totalDistance << endl;
+        cout << "================================" << endl;
+    }
 }
 
 double AdjList::heuristic(double x1, double y1, double x2, double y2, int cost)
@@ -274,34 +405,60 @@ double AdjList::heuristic(double x1, double y1, double x2, double y2, int cost)
    return heur;
 }
 
-void AdjList::A_star(int source, int destination)
+void AdjList::A_star(int Source, int destination)
 {
+
+    int sourceV=destination;
+    int destinationV=Source;
+
+    for(int i=0;i<2;i++)
+    {
+    if(i==1)
+    {
+       Source=sourceV;
+       destination=destinationV;
+    }
+    using timer = std::chrono::high_resolution_clock;
+    timer::time_point start_time = timer::now();
+
+
         list<int> stack;
         vector<double> tempvector;
         vector<int> nodes;
+
+        vector<int> nodesVisited;
+        int totalDistance = 0;
+        vector<int> cost;
+        int costTemp = 0;
+        vector<int> nodesPath;
 
         bool *visited = new bool[numVertices];
         for(int i = 0; i < numVertices; i++)
             visited[i] = false;
 
-        stack.push_back(source);
+        stack.push_back(Source);
+        nodesPath.push_back(Source);
+
+        auto one = positions[Source].begin();
+        auto two = positions[destination].begin();
+        double temp = heuristic(one->first,one->second,two->first,two->second,totalDistance);
 
         while (!stack.empty())
         {
-            source = stack.front();
+            Source = stack.front();
             stack.pop_front();
 
-            if(!visited[source])
+            if(!visited[Source])
             {
-                cout << source << endl;
-                visited[source] = true;
+                cout << Source << " ";
+                visited[Source] = true;
                 if(visited[destination] == true)
                 {
                     break;
                 }
             }
 
-            for (auto i = adjlist[source].begin(); i != adjlist[source].end(); ++i)
+            for (auto i = adjlist[Source].begin(); i != adjlist[Source].end(); ++i)
             {
                 int v = i->first;
                 int weight = i->second;
@@ -310,6 +467,7 @@ void AdjList::A_star(int source, int destination)
                 double temp = heuristic(one->first,one->second,two->first,two->second,weight);
                 tempvector.push_back(temp);
                 nodes.push_back(v);
+                cost.push_back(weight);
             }
 
             double smallest = tempvector[0];
@@ -320,19 +478,56 @@ void AdjList::A_star(int source, int destination)
                     {
                         smallest=tempvector[i];
                         smallestL = nodes[i];
+                        costTemp = cost[i];
                     }
                 }
 
+                nodesVisited.push_back(smallestL);
+                nodesPath.push_back(smallestL);
+                totalDistance += costTemp;
                 stack.push_back(smallestL);
 
                 tempvector.clear();
                 nodes.clear();
+                cost.clear();
         }
+
+        timer::time_point end_time = timer::now();
+        ostringstream x;
+        x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        string Time = x.str();
+
+
+        cout << endl;
+
+        cout << "NodesPathSize:" << nodesPath.size() << " NodesVisited:" << nodesVisited.size() << " Time:" << Time << " Distance:" << totalDistance << " Heuristic:"  << temp << "\n";
+        cout << "===================================" << endl;
+    }
 
 }
 
 void AdjList::dijkstra(int source, int destination)
 {
+
+    int sourceV=destination;
+    int destinationV=source;
+
+    for(int i=0;i<2;i++)
+    {
+    if(i==1)
+    {
+       source=sourceV;
+       destination=destinationV;
+    }
+        using timer = std::chrono::high_resolution_clock;
+        timer::time_point start_time = timer::now();
+
+
+        vector<int> nodesVisited;
+        vector<int> cost;
+        vector<int> nodesPath;
+
+
         list<pair<int,int>> pq;
 
         //vector<int> dist(numVertices, INT_MAX);
@@ -345,14 +540,16 @@ void AdjList::dijkstra(int source, int destination)
         // Insert source itself in priority Queue and initialize
         // its distance as 0.
         pq.push_back(make_pair(0, source));
+        nodesPath.push_back(source);
         dist[source] = 0;
 
-        /* Looping till priority Queue becomes empty (or all
-          distances are not finalized) */
+        // Loop until empty
         while (!pq.empty())
         {
             int u = pq.front().second;
             pq.pop_front();
+            nodesVisited.push_back(u);
+            cout << u << " ";
 
             for (auto i = adjlist[u].begin(); i != adjlist[u].end(); ++i)
             {
@@ -364,9 +561,11 @@ void AdjList::dijkstra(int source, int destination)
                 //  If there is shorted path to v through u.
                 if (dist[v] > dist[u] + weight)
                 {
-                    // Updating distance of v
+                    // Update v
                     dist[v] = dist[u] + weight;
                     pq.push_back(make_pair(dist[v], v));
+                    nodesPath.push_back(v);
+
                 }
             }
 
@@ -380,7 +579,20 @@ void AdjList::dijkstra(int source, int destination)
   //      printf("Vertex   Distance from Source\n");
    //     for (int i = 1; i < numVertices; ++i)
      //       printf("%d \t\t %d\n", i, dist[i]);
-        cout << "The shortest path from " << source << " to " << destination << " is " << dist[destination] << endl;
+   //     cout << "The shortest path from " << source << " to " << destination << " is " << dist[destination] << endl;
+
+
+        timer::time_point end_time = timer::now();
+        ostringstream x;
+        x << chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        string Time = x.str();
+        cout << destination << " ";
+        cout << endl;
+        cout  << "NodesInPath:" << nodesVisited.size()+1 << " NodesVisited:" << nodesVisited.size() << " Time:" << Time << " Distance:" << dist[destination] << "\n";
+        cout << "=============================================" << endl;
+}
+
+
 }
 
 

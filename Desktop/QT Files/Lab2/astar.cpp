@@ -1,5 +1,5 @@
 #include "astar.h"
-
+/*
 double AStarSearch::heuristic(double x1, double y1, double x2, double y2, int cost)
 {
     double dist = pow(pow(x2-x1,2)+pow(y2-y1,2),0.5);
@@ -135,3 +135,4 @@ void AStarSearch::A_Star_M(int source, int destination, int** adjmatrix, std::li
 
         }
 }
+*/
