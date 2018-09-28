@@ -2,7 +2,7 @@
 #define ASTAR_H
 #include "pathbehavior.h"
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <vector>
 
 class AStarSearch: public PathBehavior

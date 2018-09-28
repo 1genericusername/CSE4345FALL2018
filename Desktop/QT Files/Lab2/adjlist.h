@@ -1,14 +1,14 @@
 #ifndef ADJLIST_H
 #define ADJLIST_H
-#include "iostream"
+#include <iostream>
 #include "pathbehavior.h"
-#include "fstream"
+#include <fstream>
 #include <vector>
 #include <list>
 #include <chrono>
 #include <sstream>
 #include <iomanip>
-#include <math.h>
+#include <cmath>
 #include <ostream>
 #include <string>
 using namespace std;

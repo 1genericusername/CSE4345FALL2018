@@ -1,6 +1,6 @@
 #ifndef CREATEFILE_H
 #define CREATEFILE_H
-#include <time.h>
+#include <ctime>
 
 //Creates completely random set
 void createRandomSet();

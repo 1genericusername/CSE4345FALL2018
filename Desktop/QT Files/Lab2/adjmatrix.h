@@ -1,11 +1,11 @@
 #ifndef ADJMATRIX_H
 #define ADJMATRIX_H
-#include "iostream"
-#include "fstream"
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include "pathbehavior.h"
 #include <ostream>
-#include <math.h>
+#include <cmath>
 #include <chrono>
 #include <sstream>
 #include <list>

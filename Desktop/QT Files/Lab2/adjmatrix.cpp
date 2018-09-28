@@ -1,6 +1,6 @@
 #include "adjmatrix.h"
-#include "iostream"
-#include "fstream"
+#include <iostream>
+#include <fstream>
 
 //Constructor
 AdjMatrix::AdjMatrix(int numVertices)

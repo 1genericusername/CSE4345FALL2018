@@ -1,6 +1,6 @@
 #include "sort.h"
-#include "fstream"
-#include "iostream"
+#include <fstream>
+#include <iostream>
 #include "bubble.h"
 #include "insertion.h"
 #include "merge.h"

@@ -1,6 +1,6 @@
 #include "merge.h"
 #include "sortbehavior.h"
-#include "iostream"
+#include <iostream>
 
 void Merge::merge(vector<int> &vec, int left, int middle, int right)
 {

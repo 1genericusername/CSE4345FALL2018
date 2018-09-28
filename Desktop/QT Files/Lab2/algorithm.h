@@ -3,9 +3,9 @@
 #include "bubble.h"
 #include "insertion.h"
 #include "merge.h"
-#include "vector"
+#include <vector>
 #include <chrono>
-#include "iostream"
+#include <iostream>
 
 
 class Algorithm

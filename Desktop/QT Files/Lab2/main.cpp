@@ -1,7 +1,7 @@
 #include <iostream>
 #include "merge.h"
 #include "bubble.h"
-#include <stdio.h>
+#include <cstdio>
 #include "insertion.h"
 #include "sort.h"
 #include "adjmatrix.h"

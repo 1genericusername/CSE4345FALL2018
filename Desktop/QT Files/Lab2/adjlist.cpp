@@ -1,5 +1,5 @@
-#include <adjlist.h>
-#include <time.h>
+#include "adjlist.h"
+#include <ctime>
 
 AdjList::AdjList(int size)
 {

@@ -2,7 +2,6 @@
 #define SORTBEHAVIOR_H
 #include <fstream>
 #include <vector>
-//#include "sort.h"
 
 class SortBehavior
 {
