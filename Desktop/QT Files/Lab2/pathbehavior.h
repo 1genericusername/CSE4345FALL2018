@@ -37,30 +37,30 @@ class PathBehavior
 
         virtual void addVertice(int source, int destination, int weight) = 0;
 
-        virtual void Print();
+        virtual void Print() = 0;
 
         virtual void Build(std::string filename, std::string filename2) = 0;
 
         //Algorithm 1
-        virtual void BFS(int source, int d);
+        virtual void BFS(int source, int d) = 0;
 
         //Algorithm 2
-        virtual void BFSREC(int s,int d, bool visited[], std::list<int> stack, std::vector<int>& nodesVisited, int& totalDistance, std::list<int>& cost,  std::vector<int>& nodesPath);
-        virtual void BFSR(int source, int d);
+        virtual void BFSREC(int s,int d, bool visited[], std::list<int> stack, std::vector<int>& nodesVisited, int& totalDistance, std::list<int>& cost,  std::vector<int>& nodesPath) = 0;
+        virtual void BFSR(int source, int d) = 0;
 
         //Algorithm 3
-        virtual void DFS(int source, int d);
+        virtual void DFS(int source, int d) = 0;
 
         //Algorithm 4
-        virtual void DFSREC(int s,int d, bool visited[], std::list<int> Stack, std::vector<int>& nodesVisited, int& totalDistance, std::list<int>& cost,  std::vector<int>& nodesPath);
-        virtual void DFSR(int source, int d);
+        virtual void DFSREC(int s,int d, bool visited[], std::list<int> Stack, std::vector<int>& nodesVisited, int& totalDistance, std::list<int>& cost,  std::vector<int>& nodesPath) = 0;
+        virtual void DFSR(int source, int d) = 0;
 
         //Algorithm 5
         virtual double heuristic(double x1, double y1, double x2, double y2, int cost) = 0;
         virtual void A_star(int source, int destination) = 0;
 
         //Algorithm 6
-        virtual void dijkstra(int source, int destination);
+        virtual void dijkstra(int source, int destination) = 0;
 
     int numVertices = 4;
 };

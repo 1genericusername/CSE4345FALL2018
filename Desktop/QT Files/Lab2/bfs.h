@@ -2,7 +2,7 @@
 #define BFS_H
 #include "pathbehavior.h"
 #include <iostream>
-
+/*
 class breadthfirstsearch: public PathBehavior
 {
     public:
@@ -10,5 +10,5 @@ class breadthfirstsearch: public PathBehavior
         void BFS_M(int source, int dest, int** adjMatrix);
 
 };
-
+*/
 #endif // BFS_H

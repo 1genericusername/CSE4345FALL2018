@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 
+/*
 class AStarSearch: public PathBehavior
 {
     public:
@@ -13,5 +14,6 @@ class AStarSearch: public PathBehavior
     void A_Star_M(int source, int destination, int** adjmatrix, std::list<std::pair<int,int>>* positions);
 
 };
+*/
 
 #endif // ASTAR_H

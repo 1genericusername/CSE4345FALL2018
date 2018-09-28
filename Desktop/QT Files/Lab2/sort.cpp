@@ -22,7 +22,7 @@ void Sort::load(string filename)
 
 void Sort::load(string filename, string filename2)
 {
-//    ifstream
+        cout << filename << filename2 << endl;
 }
 
 void Sort::Display()
@@ -165,5 +165,4 @@ void Sort::execute(int type1, int type2)
     select(type2);
 
     cout << endl;
-    delete m_path;
 }

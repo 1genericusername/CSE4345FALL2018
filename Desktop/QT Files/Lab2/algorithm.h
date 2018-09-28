@@ -13,19 +13,19 @@ class Algorithm
     //Functions
     public:
 
-    virtual void load(std::string filename);
+    virtual void load(std::string filename) = 0;
 
-    virtual void load(std::string filename, std::string filename2);
+    virtual void load(std::string filename, std::string filename2) = 0;
 
-    virtual void Display();
+    virtual void Display() = 0;
 
-    virtual void stats();
+    virtual void stats() = 0;
 
     virtual void select(int type) = 0;
 
     virtual void execute(int type) = 0;
 
-    virtual void GrabUserInput(int one, int two);
+    virtual void GrabUserInput(int one, int two) = 0;
 
     virtual void execute(int type1, int type2) = 0;
 
